@@ -2,16 +2,9 @@ import React from 'react';
 import './App.css';
 import {Header} from "./components/Header";
 import {Player} from "./components/Player";
+import {AddPlayerForm} from "./components/AddPlayerForm";
 
 //React Element
-const players = [
-  {name: 'LDK', score: 30, id: 1},
-  {name: 'HONG', score: 40, id: 2},
-  {name: 'KIM', score: 50, id: 3},
-  {name: 'PARK', score: 70, id: 4},
-];
-
-
 
 
 // const Player = (props) => (
@@ -26,12 +19,14 @@ class App extends React.Component {
 
   state = {
     players: [
-      {name: 'LDK1', id: 1},
-      {name: 'LDK2', id: 2},
-      {name: 'LDK3', id: 3},
-      {name: 'LDK4', id: 4}
+      {name: 'LDK1', score: 0, id: 1},
+      {name: 'LDK2', score: 0, id: 2},
+      {name: 'LDK3', score: 0, id: 3},
+      {name: 'LDK4', score: 0, id: 4}
     ]
   }
+
+  maxId =4;
   //1) player 삭제 로직 선언
   handleRemovePlayer = (id) => {
     console.log(id);
@@ -41,10 +36,31 @@ class App extends React.Component {
     }))
   }
 
+  handleChangeScore = (id, delta) => {
+    console.log(id, delta);
+    this.setState(prevState => {
+      this.state.players.forEach(item => {
+        if (item.id === id) {
+          item.score += delta;
+        }
+      });
+      return {
+        players: [...prevState.players]
+      }
+    })
+  }
+
+  handleAddPlayer = (name) => {
+    console.log(name);
+    this.setState(prevState => ({
+      players: [...prevState.players, {name:name, score:0, id: ++this.maxId}] //key와 value가 같으면, shorthand property라하여 하나는 생략가능
+    }))
+  }
+
   render() {
     return (
       <div className='scoreboard'>
-        <Header title='My Scoreboard' totalPlayers={11}/>
+        <Header title='My Scoreboard' players={this.state.players}/>
         {/*<Player name='LDK1' score={50} />*/}
         {/*<Player name='LDK2' score={60} />*/}
         {/*<Player name='LDK3' score={70} />*/}
@@ -52,8 +68,10 @@ class App extends React.Component {
         {
           // prop으로 삭제 넘겨줌
           this.state.players.map(player => <Player name={player.name} key={player.id} id={player.id}
+                                                   score={player.score} changeScore={this.handleChangeScore}
                                                    removePlayer={this.handleRemovePlayer}/>)
         }
+        <AddPlayerForm addPlayer={this.handleAddPlayer}/>
       </div>
 
     )
