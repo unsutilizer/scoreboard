@@ -1,3 +1,5 @@
+import {ADD_PLAYER, CHANGE_SCORE} from "./actionType";
+
 const playerInitialState = {
   title: 'Redux Scoreboard',
   players: [
@@ -8,6 +10,28 @@ const playerInitialState = {
   ]
 }
 
+let maxId=4;
 export const playerReducer = (state=playerInitialState, action) => {
-  return state;
+  switch(action.type){
+    case ADD_PLAYER :
+      //새로운 객체,  deepcopy title은 변경 없지만, players는 변경,,,중첩
+      return {
+        ...state,
+        players: [...state.players, {name: action.name, score:0, id: ++maxId}]
+      }
+    case CHANGE_SCORE:
+      state.players.forEach(item => {
+        if(item.id ===action.payload.id){
+          item.score +=action.payload.delta;
+        }
+      })
+      return {
+        ...state,
+        players: [...state.players]//deepcopy
+      }
+      default:
+      return state;
+  }
+
+
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import Header from "./components/Header";
 import {Player} from "./components/Player";
-import {AddPlayerForm} from "./components/AddPlayerForm";
+import AddPlayerForm from "./components/AddPlayerForm";
 import {connect} from "react-redux";
 
 //React Element
@@ -43,12 +43,12 @@ class App extends React.Component {
     })
   }
 
-  handleAddPlayer = (name) => {
-    console.log(name);
-    this.setState(prevState => ({
-      players: [...prevState.players, {name:name, score:0, id: ++this.maxId}] //key와 value가 같으면, shorthand property라하여 하나는 생략가능
-    }))
-  }
+  // handleAddPlayer = (name) => {
+  //   console.log(name);
+  //   this.setState(prevState => ({
+  //     players: [...prevState.players, {name:name, score:0, id: ++this.maxId}] //key와 value가 같으면, shorthand property라하여 하나는 생략가능
+  //   }))
+  // }
 
   render() {
     return (
