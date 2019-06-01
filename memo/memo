@@ -1,0 +1,3 @@
+기본 nested/dynamic router
+
+react route dom+nuxt 라이브러리 적용 =>ssr :배포의 문제 : spa시 두번째는 헤더가 없어 검색 약함
