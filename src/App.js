@@ -3,6 +3,7 @@ import './App.css';
 import Header from "./components/Header";
 import {Player} from "./components/Player";
 import {AddPlayerForm} from "./components/AddPlayerForm";
+import {connect} from "react-redux";
 
 //React Element
 
@@ -17,14 +18,6 @@ import {AddPlayerForm} from "./components/AddPlayerForm";
 
 class App extends React.Component {
 
-  state = {
-    players: [
-      {name: 'LDK1', score: 0, id: 1},
-      {name: 'LDK2', score: 0, id: 2},
-      {name: 'LDK3', score: 0, id: 3},
-      {name: 'LDK4', score: 0, id: 4}
-    ]
-  }
 
   maxId =4;
   //1) player 삭제 로직 선언
@@ -61,14 +54,14 @@ class App extends React.Component {
     return (
       <div className='scoreboard'>
         {/*<Header title='My Scoreboard' players={this.state.players}/>*/}
-        <Header  players={this.state.players}/>
+        <Header  players={this.props.players}/>
         {/*<Player name='LDK1' score={50} />*/}
         {/*<Player name='LDK2' score={60} />*/}
         {/*<Player name='LDK3' score={70} />*/}
         {/*<Player name='LDK4' score={80} />*/}
         {
           // prop으로 삭제 넘겨줌
-          this.state.players.map(player => <Player name={player.name} key={player.id} id={player.id}
+          this.props.players.map(player => <Player name={player.name} key={player.id} id={player.id}
                                                    score={player.score} changeScore={this.handleChangeScore}
                                                    removePlayer={this.handleRemovePlayer}/>)
         }
@@ -82,4 +75,8 @@ class App extends React.Component {
 
 // ReactDOM.render(<App initialPlayers={players} />, document.getElementById('root'));
 
-export default App;
+const mapStateToProps = (state) => ({
+  players: state.playerReducer.players
+})
+
+export default connect(mapStateToProps)(App);
