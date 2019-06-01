@@ -12,7 +12,7 @@ export class Player extends React.Component {
 
     </span>
         <span className='player-name'>{name}</span>
-        <Counter score={.score} id={id} changeScore={changeScore}/>
+        <Counter score={score} id={id} changeScore={changeScore}/>
       </div>
     );
   }
